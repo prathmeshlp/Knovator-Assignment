@@ -1,4 +1,16 @@
-import { Button } from "@chakra-ui/react";
+import {
+  Button,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
+  Center,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,9 +22,10 @@ import {
 } from "../redux/productsAPI";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [firstName, setFirstName] = useState("");
@@ -20,7 +33,7 @@ const Cart = () => {
   const [address, setAddress] = useState("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
   console.log(cartItems, "cartitems");
 
@@ -65,7 +78,7 @@ const Cart = () => {
       setFirstName("");
       setLastName("");
       setAddress("");
-      navigate("/")
+      navigate("/");
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error("Error placing order. Please try again.");
@@ -76,30 +89,64 @@ const Cart = () => {
     <>
       <div className="cartcontainer">
         <div className="cartsection1">
-          {cartItems.map((item) => (
-            <div className="cartitems" key={item.id}>
-              <span>{item.name}</span>
-              <span>Price: {item.price}</span>
-              <div className="quantity_buttons">
-                <FaMinus onClick={() => handleDecrement(item.id)} />
-                <input
-                  type="number"
-                  value={item.quantity}
-                  onChange={(e) => handleQuantityChange(e, item.id)}
-                />
-
-                <FaPlus onClick={() => handleIncrement(item.id)} />
-              </div>
-              <Button
-                onClick={() => handleRemoveItem(item)}
-                variant="solid"
-                colorScheme="blue"
-              >
-                Remove Item
-              </Button>
-            </div>
-          ))}
-          <span>Total Price: {calculateTotalPrice().toFixed(2)}</span>
+          <TableContainer>
+            <Table size="lg">
+              {cartItems.length > 0 ? (
+                <TableCaption fontSize="18">
+                  Total Price: {calculateTotalPrice().toFixed(2)}
+                </TableCaption>
+              ) : (
+                ""
+              )}
+              <Thead>
+                <Tr>
+                  <Th style={{ textAlign: "center" }}>Item Name</Th>
+                  <Th style={{ textAlign: "center" }}>Price</Th>
+                  <Th style={{ textAlign: "center" }}>Quantity</Th>
+                  <Th style={{ textAlign: "center" }}>Action</Th>
+                </Tr>
+              </Thead>
+              {cartItems.map((item) => (
+                <Tbody key={item.id}>
+                  <Tr>
+                    <Td style={{ textAlign: "center" }}>{item.name}</Td>
+                    <Td style={{ textAlign: "center" }}> {item.price}</Td>
+                    <Td style={{ textAlign: "center" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: 10,
+                        }}
+                        className="handlequantity"
+                      >
+                        <FaMinus
+                          cursor="pointer"
+                          onClick={() => handleDecrement(item.id)}
+                        />
+                        <input
+                          type="number"
+                          value={item.quantity}
+                          onChange={(e) => handleQuantityChange(e, item.id)}
+                        />
+                        <FaPlus
+                          cursor="pointer"
+                          onClick={() => handleIncrement(item.id)}
+                        />
+                      </div>
+                    </Td>
+                    <Td style={{ textAlign: "center" }}>
+                      <MdDelete
+                        fontSize="30"
+                        onClick={() => handleRemoveItem(item)}
+                      />
+                    </Td>
+                  </Tr>
+                </Tbody>
+              ))}
+            </Table>
+          </TableContainer>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="cartsection2">

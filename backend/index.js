@@ -1,4 +1,4 @@
-// backend/server.js
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors")
@@ -6,7 +6,7 @@ const cors = require("cors")
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Sample product data
+
 const products = [
     {
         id: 1,
@@ -61,15 +61,14 @@ app.get('/api/products', (req, res) => {
     res.json(products);
 });
 
-// Place order API endpoint
-// API endpoint to place an order
+
 app.post('/api/placeOrder', (req, res) => {
     console.log(req.body);
     const { firstName, lastName, address} = req.body;
 
     // Validation
     if (!firstName || !lastName || !address) {
-        return res.status(400).json({ error: "First name, last name, address, product ID, and quantity are required." });
+        return res.status(400).json({ error: "First name, last name, address are required." });
     }
 
     res.json({ message: "Order placed successfully." });
