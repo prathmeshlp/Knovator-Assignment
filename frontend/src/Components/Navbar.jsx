@@ -10,21 +10,19 @@ const Navbar = () => {
   console.log(cartItems, "cartitems");
 
   const handleCart = () => {
-    navigate("/cart")
+    navigate("/cart");
   };
   const GotoHome = () => {
-    navigate("/")
+    navigate("/");
   };
 
   return (
     <div className="navbar">
-      <div className="container1">
+      <div className="cart_container1">
         <h1 onClick={GotoHome}>Ecommerce</h1>
-        
-         
       </div>
-      <div className="container2">
-        <IoCartOutline onClick={handleCart} />
+      <div className="cart_container2" onClick={handleCart}>
+        <IoCartOutline fontSize="40" />
         <span>{cartItems.length}</span>
       </div>
     </div>

@@ -13,13 +13,17 @@ const ProductList = () => {
       .catch((error) => toast.error("Error fetching products"));
   }, []);
 
-
   return (
-    <div className="product_list">
-      {products &&
-        products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+    <div className="productlistcontainer">
+      <div className="productlist_header">
+        <h1>Product List</h1>
+      </div>
+      <div className="product_list">
+        {products &&
+          products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+      </div>
     </div>
   );
 };

@@ -88,94 +88,101 @@ const Cart = () => {
   return (
     <>
       <div className="cartcontainer">
-        <div className="cartsection1">
-          <TableContainer>
-            <Table size="lg">
-              {cartItems.length > 0 ? (
-                <TableCaption fontSize="18">
-                  Total Price: {calculateTotalPrice().toFixed(2)}
-                </TableCaption>
-              ) : (
-                ""
-              )}
-              <Thead>
-                <Tr>
-                  <Th style={{ textAlign: "center" }}>Item Name</Th>
-                  <Th style={{ textAlign: "center" }}>Price</Th>
-                  <Th style={{ textAlign: "center" }}>Quantity</Th>
-                  <Th style={{ textAlign: "center" }}>Action</Th>
-                </Tr>
-              </Thead>
-              {cartItems.map((item) => (
-                <Tbody key={item.id}>
-                  <Tr>
-                    <Td style={{ textAlign: "center" }}>{item.name}</Td>
-                    <Td style={{ textAlign: "center" }}> {item.price}</Td>
-                    <Td style={{ textAlign: "center" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          gap: 10,
-                        }}
-                        className="handlequantity"
-                      >
-                        <FaMinus
-                          cursor="pointer"
-                          onClick={() => handleDecrement(item.id)}
-                        />
-                        <input
-                          type="number"
-                          value={item.quantity}
-                          onChange={(e) => handleQuantityChange(e, item.id)}
-                        />
-                        <FaPlus
-                          cursor="pointer"
-                          onClick={() => handleIncrement(item.id)}
-                        />
-                      </div>
-                    </Td>
-                    <Td style={{ textAlign: "center" }}>
-                      <MdDelete
-                        fontSize="30"
-                        onClick={() => handleRemoveItem(item)}
-                      />
-                    </Td>
-                  </Tr>
-                </Tbody>
-              ))}
-            </Table>
-          </TableContainer>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="cartsection2">
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              required
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Address"
-              required
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <Button type="submit" variant="solid" colorScheme="blue">
-              Place Order
-            </Button>
-          </div>
-        </form>
+        {cartItems.length > 0 ? (
+          <>
+            
+            <div className="cartsection1">
+              <TableContainer>
+                <Table size="lg">
+                  {cartItems.length > 0 ? (
+                    <TableCaption fontSize="18">
+                      Total Price: {calculateTotalPrice().toFixed(2)}
+                    </TableCaption>
+                  ) : (
+                    ""
+                  )}
+                  <Thead>
+                    <Tr>
+                      <Th style={{ textAlign: "center" }}>Item Name</Th>
+                      <Th style={{ textAlign: "center" }}>Price</Th>
+                      <Th style={{ textAlign: "center" }}>Quantity</Th>
+                      <Th style={{ textAlign: "center" }}>Action</Th>
+                    </Tr>
+                  </Thead>
+                  {cartItems.map((item) => (
+                    <Tbody key={item.id}>
+                      <Tr>
+                        <Td style={{ textAlign: "center" }}>{item.name}</Td>
+                        <Td style={{ textAlign: "center" }}> {item.price}</Td>
+                        <Td style={{ textAlign: "center" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              gap: 10,
+                            }}
+                            className="handlequantity"
+                          >
+                            <FaMinus
+                              cursor="pointer"
+                              onClick={() => handleDecrement(item.id)}
+                            />
+                            <input
+                              type="number"
+                              value={item.quantity}
+                              onChange={(e) => handleQuantityChange(e, item.id)}
+                            />
+                            <FaPlus
+                              cursor="pointer"
+                              onClick={() => handleIncrement(item.id)}
+                            />
+                          </div>
+                        </Td>
+                        <Td style={{ textAlign: "center" }}>
+                          <MdDelete
+                            fontSize="30"
+                            onClick={() => handleRemoveItem(item)}
+                          />
+                        </Td>
+                      </Tr>
+                    </Tbody>
+                  ))}
+                </Table>
+              </TableContainer>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="cartsection2">
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Address"
+                  required
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+                <Button type="submit" variant="solid" colorScheme="blue">
+                  Place Order
+                </Button>
+              </div>
+            </form>
+          </>
+        ) : (
+          <h1>No Items In the cart</h1>
+        )}
       </div>
     </>
   );
